@@ -1,5 +1,3 @@
-package de.tum.in.far.threedui.ex4.solution.amal;
-
 import javax.media.j3d.Transform3D;
 import javax.media.j3d.TransformGroup;
 

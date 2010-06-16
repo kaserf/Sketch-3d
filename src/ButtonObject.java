@@ -1,5 +1,3 @@
-package de.tum.in.far.threedui.ex4.solution.amal;
-
 import javax.media.j3d.Appearance;
 import javax.media.j3d.Material;
 import javax.media.j3d.Switch;
@@ -11,9 +9,6 @@ import javax.vecmath.Vector3f;
 
 import com.sun.j3d.utils.geometry.Cone;
 import com.sun.j3d.utils.geometry.Cylinder;
-
-import de.tum.in.far.threedui.ex1.BlueAppearance;
-import de.tum.in.far.threedui.ex2.solution.TransformableObject;
 
 public class ButtonObject extends TransformableObject {
 

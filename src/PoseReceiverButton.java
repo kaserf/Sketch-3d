@@ -1,9 +1,5 @@
-package de.tum.in.far.threedui.ex4.solution.amal;
-
 import java.util.Timer;
 import java.util.TimerTask;
-
-import de.tum.in.far.threedui.ex2.solution.PoseReceiver;
 
 
 import ubitrack.SimplePose;

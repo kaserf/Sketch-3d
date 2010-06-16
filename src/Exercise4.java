@@ -1,5 +1,3 @@
-package de.tum.in.far.threedui.ex4.solution.amal;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import javax.media.j3d.BranchGroup;
@@ -14,25 +12,11 @@ import com.sun.j3d.loaders.IncorrectFormatException;
 import com.sun.j3d.loaders.ParsingErrorException;
 import com.sun.j3d.loaders.Scene;
 
-import de.tum.in.far.threedui.ex2.solution.BackgroundObject;
-import de.tum.in.far.threedui.ex2.solution.ImageReceiver;
-import de.tum.in.far.threedui.ex2.solution.ModelObject;
-import de.tum.in.far.threedui.ex2.solution.PoseReceiver;
-import de.tum.in.far.threedui.ex2.solution.UbitrackFacade;
-import de.tum.in.far.threedui.ex2.solution.Viewer;
-
-
-
-
-
-
-
-
-
 public class Exercise4 {
-	public final static String COMPONENT_DIRECTORY = System.getProperty("user.dir") + File.separator + "libs" + File.separator + "ubitrack" + File.separator + "bin" + File.separator + "ubitrack";
+	public final static String COMPONENT_DIRECTORY = System.getProperty("user.dir") + File.separator + "libs" + File.separator + "ubitrack";
 	public final static String DATAFLOW_PATH = System.getProperty("user.dir") + File.separator + "dataflow" + File.separator + "3D-UI-SS-2010-Markertracker.dfg";
-
+//	public final static String COMPONENT_DIRECTORY = "/home/felix/Documents/uni/ss10/3dui/ubitrack/lib/ubitrack";
+//	public final static String DATAFLOW_PATH = "/home/felix/Documents/uni/ss10/3dui/workspace/Exercise_2/dataflow/3D-UI-SS-2010-Markertracker.dfg";
 
 	public static final String EXERCISE = "Exercise 4 Solution";
 	
