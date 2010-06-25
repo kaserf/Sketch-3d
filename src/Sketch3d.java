@@ -1,5 +1,3 @@
-
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import javax.media.j3d.BranchGroup;
@@ -15,7 +13,7 @@ import com.sun.j3d.loaders.ParsingErrorException;
 import com.sun.j3d.loaders.Scene;
 
 
-public class Sketch3D {
+public class Sketch3D implements PoseUpdatedNotification {
 	public final static String COMPONENT_DIRECTORY = System.getProperty("user.dir") + File.separator + "libs" + File.separator + "ubitrack" + File.separator + "bin" + File.separator + "ubitrack";
 	public final static String DATAFLOW_PATH = System.getProperty("user.dir") + File.separator + "dataflow" + File.separator + "3D-UI-SS-2010-Markertracker.dfg";
 
@@ -23,7 +21,7 @@ public class Sketch3D {
 	public static final String EXERCISE = "Sketch3D";
 	
 	private UbitrackFacade ubitrackFacade;
-	private PoseReceiverButton poseReceiverButton;
+	private PoseReceiver poseReceiverButton;
 	private PoseReceiver poseReceiver2;
 	private PoseReceiver poseReceiver3;
 	private ImageReceiver imageReceiver;
@@ -31,7 +29,7 @@ public class Sketch3D {
 	private Viewer viewer;
 	private ButtonObject buttonObject;
 	private ModelObject sheepObject;
-	private MotionInterpolator motionInterpolator;
+//	private MotionInterpolator motionInterpolator;
 	
 	private static PaintController paintController;
 	
@@ -55,16 +53,16 @@ public class Sketch3D {
 	private void initializeUbitrack() {
 		ubitrackFacade.initUbitrack();
 		
-		motionInterpolator = new MotionInterpolator(sheepObject.getTransformGroup(), buttonObject);
-		poseReceiverButton = new PoseReceiverButton(buttonObject, motionInterpolator);	
+//		motionInterpolator = new MotionInterpolator(sheepObject.getTransformGroup(), buttonObject);
+		poseReceiverButton = new PoseReceiver(this, 1);	
 		if (!ubitrackFacade.setPoseCallback("posesink", poseReceiverButton)) {
 			return;
 		}
-		poseReceiver2 = new PoseReceiver();
+		poseReceiver2 = new PoseReceiver(this, 2);
 		if (!ubitrackFacade.setPoseCallback("posesink2", poseReceiver2)) {
 			return;
 		}
-		poseReceiver3 = new PoseReceiver();
+		poseReceiver3 = new PoseReceiver(this, 3);
 		if (!ubitrackFacade.setPoseCallback("posesink3", poseReceiver3)) {
 			return;
 		}
@@ -80,9 +78,9 @@ public class Sketch3D {
 		viewer.addObject(backgroundObject);
 		imageReceiver.setBackground(backgroundObject.getBackground());
 		
-		poseReceiverButton.setTransformGroup(buttonObject.getTransformGroup());
-		poseReceiver2.setTransformGroup(motionInterpolator.getStartTG());
-		poseReceiver3.setTransformGroup(motionInterpolator.getDestTG());
+//		poseReceiverButton.setTransformGroup(buttonObject.getTransformGroup());
+//		poseReceiver2.setTransformGroup(motionInterpolator.getStartTG());
+//		poseReceiver3.setTransformGroup(motionInterpolator.getDestTG());
 	}
 	
 	protected void loadSheep() {
@@ -120,6 +118,11 @@ public class Sketch3D {
 		viewer.addObject(buttonObject);
 		
 		System.out.println("Done");
+	}
+
+	@Override
+	public void handlePoseUpdatedNotification(PoseReceiver poseReceiver) {
+		System.out.println("update notification from marker " + poseReceiver.getTag() + " -- pos: " + poseReceiver.getTranslationVector());
 	}
 
 }

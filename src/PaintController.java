@@ -1,21 +1,7 @@
 import ubitrack.SimplePose;
-import javax.vecmath.Quat4d;
 import javax.vecmath.Vector3d;
 
 public class PaintController {
-	/**
-	 * Converts a SimplePose translation into a Java3D vector object.
-	 * @param pose the pose to convert
-	 * @return the pose's translation as a Vector3d
-	 */
-	Vector3d poseTranslationToVector3d(SimplePose pose) {
-		return new Vector3d(pose.getTx(), pose.getTy(), pose.getTz());
-	}
-	
-	Quat4d poseRotationToQuat4d(SimplePose pose) {
-		return new Quat4d(pose.getRx(), pose.getRy(), pose.getRz(), pose.getRw());
-	}
-	
 	/**
 	 * Returns the distance vector between the translations of two ubitrack poses.
 	 * @param a the first pose
@@ -23,8 +9,8 @@ public class PaintController {
 	 * @return the distance vector between the two poses
 	 */
 	Vector3d getDistanceBetweenPoses(SimplePose a, SimplePose b) {
-		Vector3d aTranslationVec = poseTranslationToVector3d(a);	
-		Vector3d bTranslationVec = poseTranslationToVector3d(b);
+		Vector3d aTranslationVec = Utils.poseTranslationToVector3d(a);	
+		Vector3d bTranslationVec = Utils.poseTranslationToVector3d(b);
 		
 		Vector3d distanceVec = new Vector3d();
 		distanceVec.sub(aTranslationVec, bTranslationVec);
