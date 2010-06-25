@@ -15,12 +15,12 @@ public class UbitrackFacade {
 	public void initUbitrack() {
 		ubitrack.initLogging();
 		
-		facade = new SimpleFacade(Exercise4.COMPONENT_DIRECTORY);
+		facade = new SimpleFacade(Sketch3D.COMPONENT_DIRECTORY);
 		
 		if (facade.getLastError() != null) {
 			return;
 		}
-		if (!facade.loadDataflow(Exercise4.DATAFLOW_PATH)) {
+		if (!facade.loadDataflow(Sketch3D.DATAFLOW_PATH)) {
 			return;
 		}
 	}
