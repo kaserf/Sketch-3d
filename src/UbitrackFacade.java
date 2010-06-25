@@ -1,12 +1,11 @@
 
-
 import ubitrack.SimpleFacade;
 import ubitrack.SimpleImageReceiver;
 import ubitrack.SimplePoseReceiver;
 import ubitrack.ubitrack;
 
 public class UbitrackFacade {
-
+	
 	static {
 		System.loadLibrary("ubitrack_java");
 	}

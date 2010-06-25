@@ -315,7 +315,7 @@
         </Output>
         <DataflowConfiguration>
             <UbitrackLib class="Matrix3x3CalibReader"/>
-            <Attribute xsi:type="utql:PrimitiveAttributeType" name="file" value="2010-SS-3DUI/dataflow/CamCalib-3-3-Matrix" xmlns:utql="http://ar.in.tum.de/ubitrack/utql"/>
+            <Attribute xsi:type="utql:PrimitiveAttributeType" name="file" value="dataflow\CamCalib-3-3-Matrix" xmlns:utql="http://ar.in.tum.de/ubitrack/utql"/>
             <Attribute xsi:type="utql:PrimitiveAttributeType" name="trackman-guipos" value="86 10" xmlns:utql="http://ar.in.tum.de/ubitrack/utql"/>
         </DataflowConfiguration>
     </Pattern>
@@ -336,7 +336,7 @@
         </Output>
         <DataflowConfiguration>
             <UbitrackLib class="Vector4CalibReader"/>
-            <Attribute xsi:type="utql:PrimitiveAttributeType" name="file" value="2010-SS-3DUI/dataflow/CamCalib-4-Vector" xmlns:utql="http://ar.in.tum.de/ubitrack/utql"/>
+            <Attribute xsi:type="utql:PrimitiveAttributeType" name="file" value="dataflow\CamCalib-4-Vector" xmlns:utql="http://ar.in.tum.de/ubitrack/utql"/>
             <Attribute xsi:type="utql:PrimitiveAttributeType" name="trackman-guipos" value="370 10" xmlns:utql="http://ar.in.tum.de/ubitrack/utql"/>
         </DataflowConfiguration>
     </Pattern>
@@ -395,7 +395,7 @@
         </Output>
         <DataflowConfiguration>
             <UbitrackLib class="HighguiFrameGrabber"/>
-            <Attribute xsi:type="utql:PrimitiveAttributeType" name="highguiCameraIndex" value="1" xmlns:utql="http://ar.in.tum.de/ubitrack/utql"/>
+            <Attribute xsi:type="utql:PrimitiveAttributeType" name="highguiCameraIndex" value="0" xmlns:utql="http://ar.in.tum.de/ubitrack/utql"/>
             <Attribute xsi:type="utql:PrimitiveAttributeType" name="trackman-guipos" value="610 10" xmlns:utql="http://ar.in.tum.de/ubitrack/utql"/>
         </DataflowConfiguration>
     </Pattern>

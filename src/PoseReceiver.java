@@ -1,5 +1,4 @@
 
-
 import javax.media.j3d.Transform3D;
 import javax.media.j3d.TransformGroup;
 import javax.vecmath.Quat4d;
@@ -10,7 +9,7 @@ import ubitrack.SimplePoseReceiver;
 
 public class PoseReceiver extends SimplePoseReceiver {
 
-	TransformGroup markerTransGroup = null;
+	protected TransformGroup markerTransGroup = null;
 	
 	public void setTransformGroup(TransformGroup markerTransGroup) {
 		this.markerTransGroup = markerTransGroup;

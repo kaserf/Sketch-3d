@@ -1,5 +1,4 @@
 
-
 import java.awt.Point;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBuffer;
@@ -19,11 +18,12 @@ import ubitrack.ubitrack;
 /**
  * A {@link SimpleImageReceiver} implementation copying
  * received image data to a {@link Background} image.
+ * @author Jan Schlüter
  */
 public class ImageReceiver extends SimpleImageReceiver {
 
-	public static final int X_PIXEL = 640;
-	public static final int Y_PIXEL = 480;
+	public static final int X_PIXEL = 320;
+	public static final int Y_PIXEL = 240;
 	
 	/**
 	 * SKIP_FRAMES defines how many frames are skipped before
@@ -76,7 +76,7 @@ public class ImageReceiver extends SimpleImageReceiver {
 				SinglePixelPackedSampleModel(
 						DataBuffer.TYPE_BYTE, _width, _height, bitmask), _dataBuffer,
 						new Point(0, 0));
-		_bgImage = new BufferedImage(width, height, BufferedImage.TYPE_BYTE_GRAY);//TYPE_INT_BGR 
+		_bgImage = new BufferedImage(width, height, BufferedImage.TYPE_BYTE_GRAY);
 		_bgImage.setData(_raster);
 		/*
 		 * Part of the better solution that does not work: 
@@ -124,7 +124,7 @@ public class ImageReceiver extends SimpleImageReceiver {
 			*/
 			_bgImage.setData(_raster);
 			_background.setImage(new ImageComponent2D(
-					ImageComponent2D.FORMAT_CHANNEL8, _bgImage, true, false));//FORMAT_RGB
+					ImageComponent2D.FORMAT_CHANNEL8, _bgImage, true, true));
 //			System.out.println("Background set to image " + _count);
 		}
 		_count = _count + 1;
