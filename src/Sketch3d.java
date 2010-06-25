@@ -20,7 +20,7 @@ public class Sketch3D {
 	public final static String DATAFLOW_PATH = System.getProperty("user.dir") + File.separator + "dataflow" + File.separator + "3D-UI-SS-2010-Markertracker.dfg";
 
 
-	public static final String EXERCISE = "Exercise 4 Solution";
+	public static final String EXERCISE = "Sketch3D";
 	
 	private UbitrackFacade ubitrackFacade;
 	private PoseReceiverButton poseReceiverButton;
@@ -45,11 +45,11 @@ public class Sketch3D {
 	}
 
 	public static void main(String[] args) {
-		Sketch3D exercise4 = new Sketch3D();
-		exercise4.initializeJava3D();
-		exercise4.loadSheep();
-		exercise4.initializeUbitrack();
-		exercise4.linkUbitrackToViewer();
+		Sketch3D sketch3D = new Sketch3D();
+		sketch3D.initializeJava3D();
+		sketch3D.loadSheep();
+		sketch3D.initializeUbitrack();
+		sketch3D.linkUbitrackToViewer();
 	}
 	
 	private void initializeUbitrack() {
