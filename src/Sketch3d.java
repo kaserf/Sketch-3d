@@ -2,8 +2,6 @@ import java.io.File;
 
 import javax.vecmath.Vector3d;
 
-import ubitrack.SimplePose;
-
 public class Sketch3D implements PoseUpdatedNotification {
 	public final static String COMPONENT_DIRECTORY = System.getProperty("user.dir") + File.separator + "libs" + File.separator + "ubitrack" + File.separator + "bin" + File.separator + "ubitrack";
 	public final static String DATAFLOW_PATH = System.getProperty("user.dir") + File.separator + "dataflow" + File.separator + "3D-UI-SS-2010-Markertracker.dfg";
@@ -24,8 +22,8 @@ public class Sketch3D implements PoseUpdatedNotification {
 	
 	public static final double EDITING_VOLUME_RADIUS = 0.25; //25 cm??
 	
-	private SimplePose latestPenPose = null;
-	private SimplePose latestEditingVolumePose = null;
+	private Vector3d latestPenTranslation = null;
+	private Vector3d latestEditingVolumeTranslation = null;
 	
 	private ImageReceiver imageReceiver;
 	private Viewer viewer;
@@ -81,23 +79,23 @@ public class Sketch3D implements PoseUpdatedNotification {
 
 	@Override
 	public void handlePoseUpdatedNotification(PoseReceiver poseReceiver) {
-		System.out.println("update notification from marker " + poseReceiver.getTag() + " -- pos: " + poseReceiver.getTranslationVector());
+		System.out.println("Update notification from marker " + poseReceiver.getTag() + " -- pos: " + poseReceiver.getTranslationVector());
 		
 		switch (poseReceiver.getTag()) {
 		case 1:
-			latestEditingVolumePose = poseReceiver.getPose();
+			latestEditingVolumeTranslation = poseReceiver.getTranslationVector();
 			break;
 
 		case 2:
-			latestPenPose = poseReceiver.getPose();
+			latestPenTranslation = poseReceiver.getTranslationVector();
 			break;
 			
 		default:
 			throw new RuntimeException("Unknown tag value for poseReceiver");
 		}
 		
-		if (paintController.shouldDraw(latestPenPose, latestEditingVolumePose, EDITING_VOLUME_RADIUS)) {
-			Vector3d drawCoords = paintController.getDrawCoords(latestPenPose, latestEditingVolumePose);
+		if (paintController.shouldDraw(latestPenTranslation, latestEditingVolumeTranslation, EDITING_VOLUME_RADIUS)) {
+			Vector3d drawCoords = paintController.getDrawCoords(latestPenTranslation, latestEditingVolumeTranslation);
 			System.out.println("Drawing at coords " + drawCoords);
 		}
 	}
