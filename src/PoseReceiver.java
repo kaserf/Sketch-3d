@@ -12,6 +12,9 @@ import ubitrack.SimplePoseReceiver;
  * @author bader
  */
 public class PoseReceiver extends SimplePoseReceiver {
+	/** The latest known ubitrack pose. */
+	private SimplePose pose = null;
+	
 	/** The latest known translation of the pose. */
 	private Vector3d translationVector = null;
 	
@@ -29,12 +32,18 @@ public class PoseReceiver extends SimplePoseReceiver {
 	public PoseReceiver(PoseUpdatedNotification updateReceiver, int tag) {
 		this.updateReceiver = updateReceiver;
 		this.tag = tag;
+		
+		System.out.println("Registered PoseReceiver with tag " + tag);
 	}
 	
 	public PoseReceiver() {
 		
 	}
 	
+	public SimplePose getPose() {
+		return pose;
+	}
+
 	public Vector3d getTranslationVector() {
 		return translationVector;
 	}
@@ -48,6 +57,7 @@ public class PoseReceiver extends SimplePoseReceiver {
 	}
 	
 	public void receivePose(SimplePose pose) {
+		this.pose = pose;
 		translationVector = Utils.poseTranslationToVector3d(pose);
 		rotationQuaternion = Utils.poseRotationToQuat4d(pose);
 		
