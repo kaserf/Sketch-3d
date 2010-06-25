@@ -33,8 +33,15 @@ public class Sketch3D {
 	private ModelObject sheepObject;
 	private MotionInterpolator motionInterpolator;
 	
+	private static PaintController paintController;
+	
+	public static PaintController getPaintController() {
+		return paintController;
+	}
+
 	public Sketch3D() {
 		ubitrackFacade = new UbitrackFacade();
+		paintController = new PaintController();
 	}
 
 	public static void main(String[] args) {
