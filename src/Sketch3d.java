@@ -1,5 +1,6 @@
 import java.io.File;
 
+import javax.media.j3d.TransformGroup;
 import javax.vecmath.Vector3d;
 
 public class Sketch3D implements PoseUpdatedNotification {
@@ -20,6 +21,8 @@ public class Sketch3D implements PoseUpdatedNotification {
 	/** The main paint controller. */
 	private static PaintController paintController;
 	
+	private EditingVolume editingVolume = null;
+	
 	public static final double EDITING_VOLUME_RADIUS = 0.25; //25 cm??
 	
 	private Vector3d latestPenTranslation = null;
@@ -35,6 +38,10 @@ public class Sketch3D implements PoseUpdatedNotification {
 	public Sketch3D() {
 		ubitrackFacade = new UbitrackFacade();
 		paintController = new PaintController();
+		
+		TransformGroup transGroup = new TransformGroup();
+		transGroup.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
+		this.editingVolume = new EditingVolume(viewer.universe, transGroup);
 	}
 
 	public static void main(String[] args) {
@@ -84,6 +91,7 @@ public class Sketch3D implements PoseUpdatedNotification {
 		switch (poseReceiver.getTag()) {
 		case 1:
 			latestEditingVolumeTranslation = poseReceiver.getTranslationVector();
+			editingVolume.updateLocation(latestEditingVolumeTranslation, poseReceiver.getRotationQuaternion());
 			break;
 
 		case 2:
@@ -97,6 +105,7 @@ public class Sketch3D implements PoseUpdatedNotification {
 		if (paintController.shouldDraw(latestPenTranslation, latestEditingVolumeTranslation, EDITING_VOLUME_RADIUS)) {
 			Vector3d drawCoords = paintController.getDrawCoords(latestPenTranslation, latestEditingVolumeTranslation);
 			System.out.println("Drawing at coords " + drawCoords);
+			editingVolume.drawDot(drawCoords);
 		}
 	}
 
