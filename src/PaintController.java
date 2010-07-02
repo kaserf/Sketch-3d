@@ -37,7 +37,7 @@ public class PaintController {
 		// We probably already know that. But what the hell let's just compute it once more.
 		Vector3d distanceVec = new Vector3d();
 		distanceVec.sub(penTranslation, editingVolumeTranslation);
-		distanceVec.normalize();
+		//distanceVec.normalize();
 		return distanceVec;
 	}
 }

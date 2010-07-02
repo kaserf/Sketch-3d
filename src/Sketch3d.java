@@ -1,5 +1,6 @@
 import java.io.File;
 
+import javax.media.j3d.Transform3D;
 import javax.media.j3d.TransformGroup;
 import javax.vecmath.Vector3d;
 
@@ -23,7 +24,7 @@ public class Sketch3D implements PoseUpdatedNotification {
 	
 	private EditingVolume editingVolume = null;
 	
-	public static final double EDITING_VOLUME_RADIUS = 0.25; //25 cm??
+	public static final double EDITING_VOLUME_RADIUS = 1;
 	
 	private Vector3d latestPenTranslation = null;
 	private Vector3d latestEditingVolumeTranslation = null;
@@ -37,18 +38,19 @@ public class Sketch3D implements PoseUpdatedNotification {
 
 	public Sketch3D() {
 		ubitrackFacade = new UbitrackFacade();
+		initializeJava3D();
+		initializeUbitrack();
+		linkUbitrackToViewer();
+		initSketchStuff();
+	}
+
+	private void initSketchStuff() {
 		paintController = new PaintController();
-		
-		TransformGroup transGroup = new TransformGroup();
-		transGroup.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
-		this.editingVolume = new EditingVolume(viewer.universe, transGroup);
+		this.editingVolume = new EditingVolume(viewer);
 	}
 
 	public static void main(String[] args) {
-		Sketch3D sketch3D = new Sketch3D();
-		sketch3D.initializeJava3D();
-		sketch3D.initializeUbitrack();
-		sketch3D.linkUbitrackToViewer();
+		Sketch3D sketch3D = new Sketch3D();	
 	}
 	
 	private void initializeUbitrack() {
@@ -80,6 +82,11 @@ public class Sketch3D implements PoseUpdatedNotification {
 	private void initializeJava3D() {
 		System.out.println("Creating Viewer - " + WINDOW_TITLE);
 		viewer = new Viewer(WINDOW_TITLE, ubitrackFacade);
+		
+		Transform3D cameraTransform = new Transform3D();
+		cameraTransform.setTranslation(new Vector3d(0, 0, 0));
+		TransformGroup cameraTG = viewer.getCameraTransformGroup();
+		cameraTG.setTransform(cameraTransform);
 		
 		System.out.println("Done");
 	}

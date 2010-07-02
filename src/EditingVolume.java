@@ -8,32 +8,37 @@ import com.sun.j3d.utils.universe.SimpleUniverse;
 
 
 public class EditingVolume extends TransformableObject {
-	private final BranchGroup rootNode;
-	protected TransformGroup transformGroup = null;
-	
-	public void setTransformGroup(TransformGroup transformGroup) {
-		this.transformGroup = transformGroup;
-	}
+	private Viewer view;
 
-	public EditingVolume(SimpleUniverse universe, TransformGroup transformGroup) {
+	public EditingVolume(Viewer v) {
 		super();
-		this.transformGroup = transformGroup;
-		rootNode = new BranchGroup();
-		rootNode.setCapability(BranchGroup.ALLOW_CHILDREN_EXTEND);
-		universe.addBranchGraph(rootNode);
+		view = v;
+		this.setCapability(BranchGroup.ALLOW_CHILDREN_EXTEND);
+		transGroup.setCapability(TransformGroup.ALLOW_CHILDREN_EXTEND);
+		
+//		transformGroup.addChild(rootNode);
+//		rootNode.addChild(transformGroup);
+		
+		view.universe.addBranchGraph(this);
+		
+		drawDot(new Vector3d(0,0,0));
+		drawDot(new Vector3d(0.02,0,0));
+		drawDot(new Vector3d(0,0.02,0));
 	}
 	
 	public void updateLocation(Vector3d translation, Quat4d rotation) {
 		Transform3D transform = new Transform3D();
 		transform.set(rotation, translation, 1);
-		transformGroup.setTransform(transform);
+		transGroup.setTransform(transform);
 	}
 
 	void drawDot(Vector3d pos) {
 		BlueAppearance appearance = new BlueAppearance();
 		SphereObject pixelObj = new SphereObject(0.005f, appearance);
 
-		rootNode.addChild(pixelObj);
+		transGroup.addChild(pixelObj);
+
+//		view.addObject(pixelObj);
 
 		Transform3D objT3D = new Transform3D();
 		objT3D.setTranslation(pos);
