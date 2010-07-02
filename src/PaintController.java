@@ -8,7 +8,7 @@ public class PaintController {
 	 * @param radius the radius of the editing volume
 	 * @return true if inside, false if not
 	 */
-	boolean shouldDraw(Vector3d penTranslation, Vector3d editingVolumeTranslation, double radius) {
+	boolean shouldDraw(Vector3d penTranslation, Vector3d editingVolumeTranslation, double radius) {	
 		if (penTranslation == null || editingVolumeTranslation == null) {
 			return false;
 		}

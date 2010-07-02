@@ -24,6 +24,7 @@ public class ViewerEx1 {
 
 	protected final JFrame frame;
 	protected final SimpleUniverse universe;
+	protected final Canvas3D canvas3D;
 
 	private final BranchGroup rootNode;
 	
@@ -34,14 +35,14 @@ public class ViewerEx1 {
 		GraphicsConfiguration config = SimpleUniverse.getPreferredConfiguration();
 		
 		// Create a 3D canvas using the settings of your display
-		Canvas3D canvas3D = new Canvas3D(config);
+		canvas3D = new Canvas3D(config);
 		canvas3D.setSize(800,600);
 		universe = new SimpleUniverse(canvas3D);
 		
 		// Attach lights, shapes, etc here
 		rootNode = new BranchGroup();
 		rootNode.setCapability(BranchGroup.ALLOW_CHILDREN_EXTEND);
-		universe.addBranchGraph(rootNode);
+		universe.addBranchGraph(rootNode);		
 		
 		createLight();
 		initKeyNavigation();
