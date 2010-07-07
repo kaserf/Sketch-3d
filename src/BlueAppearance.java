@@ -14,7 +14,7 @@ public class BlueAppearance extends Appearance {
 		
 		// Ambient,emissive,diffuse,specular,shininess
 		Material blueMat = new Material
-		(blue, black, blue, specular,25.0f);
+		(blue, black, blue, black,1.0f);
 		
 		//Switch on light
 		blueMat.setLightingEnable(true);

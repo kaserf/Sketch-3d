@@ -2,16 +2,18 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
 
+import javax.media.j3d.Alpha;
 import javax.media.j3d.Transform3D;
 import javax.media.j3d.TransformGroup;
-import javax.vecmath.AxisAngle4d;
 import javax.vecmath.Vector3d;
 
 public class Sketch3D implements PoseUpdatedNotification, MouseListener {
 	public final static String COMPONENT_DIRECTORY = System.getProperty("user.dir") + File.separator + "libs" + File.separator + "ubitrack" + File.separator + "bin" + File.separator + "ubitrack";
 	public final static String DATAFLOW_PATH = System.getProperty("user.dir") + File.separator + "dataflow" + File.separator + "3D-UI-SS-2010-Markertracker.dfg";
 
-
+	//paths for felix, comment if not needed
+	//public final static String COMPONENT_DIRECTORY = System.getProperty("user.dir") + File.separator + "libs" + File.separator + "ubitrack";// + File.separator + "bin" + File.separator + "ubitrack";
+	
 	public static final String WINDOW_TITLE = "Sketch3D";
 
 	private UbitrackFacade ubitrackFacade;
@@ -33,6 +35,7 @@ public class Sketch3D implements PoseUpdatedNotification, MouseListener {
 
 	private Vector3d latestPenTranslation = null;
 	private Vector3d latestEditingVolumeTranslation = null;
+	private Vector3d latestPixel = null;
 
 	private ImageReceiver imageReceiver;
 	private Viewer viewer;
@@ -110,7 +113,7 @@ public class Sketch3D implements PoseUpdatedNotification, MouseListener {
 
 	@Override
 	public void handlePoseUpdatedNotification(PoseReceiver poseReceiver) {
-		System.out.println("Update notification from marker " + poseReceiver.getTag() + " -- pos: " + poseReceiver.getTranslationVector());
+		//System.out.println("Update notification from marker " + poseReceiver.getTag() + " -- pos: " + poseReceiver.getTranslationVector());
 
 		switch (poseReceiver.getTag()) {
 		case 1:
@@ -134,7 +137,28 @@ public class Sketch3D implements PoseUpdatedNotification, MouseListener {
 		if (isDrawing) {
 			Vector3d drawCoords = paintController.getDrawCoords(latestPenTranslation, latestEditingVolumeTranslation);
 			System.out.println("Drawing at coords " + drawCoords);
-			editingVolume.drawDot(drawCoords);
+			editingVolume.drawDot(Utils.roundCoords(drawCoords));
+			
+			if (latestPixel == null){
+				latestPixel = new Vector3d(drawCoords);
+			}
+			
+			Vector3d distPixels = new Vector3d();
+			distPixels.sub(latestPixel, drawCoords);
+			double step = 0.001/distPixels.length();
+			System.out.println("dist between pixels: " + distPixels.length());
+			System.out.println("step " + step);
+			if (distPixels.length()>0.02){
+				//draw pixels in between --> interpolate
+				for (double i = 0; i<1; i = i+step){
+					Vector3d tmp = new Vector3d(distPixels);
+					tmp.scale(i);
+					tmp.add(drawCoords);
+					editingVolume.drawDot(tmp);
+					System.out.println("draw interpolated pixel " + tmp);
+				}
+			}
+			latestPixel = new Vector3d(drawCoords);
 		}
 	}
 

@@ -1,3 +1,5 @@
+import java.text.DecimalFormat;
+
 import javax.vecmath.Quat4d;
 import javax.vecmath.Vector3d;
 
@@ -31,5 +33,27 @@ public class Utils {
 		distanceVec.sub(aTranslationVec, bTranslationVec);
 		
 		return distanceVec;
+	}
+	
+	/**
+	 * round to one digit after the comma
+	 * @param coords
+	 * @return
+	 */
+	static Vector3d roundCoords(Vector3d coords){
+		return new Vector3d(roundTwoDecimals(coords.x),
+				roundTwoDecimals(coords.y), roundTwoDecimals(coords.z));
+		//return new Vector3d(roundOneDecimals(coords.x),
+		//		roundOneDecimals(coords.y), roundOneDecimals(coords.z));
+	}
+	
+	private static double roundTwoDecimals(double d) {
+    	DecimalFormat twoDForm = new DecimalFormat("#.##");
+		return Double.valueOf(twoDForm.format(d));
+	}
+	
+	private static double roundOneDecimals(double d) {
+    	DecimalFormat twoDForm = new DecimalFormat("#.#");
+		return Double.valueOf(twoDForm.format(d));
 	}
 }
