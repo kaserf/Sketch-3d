@@ -73,4 +73,15 @@ public class EditingVolume extends TransformableObject {
 
 		pixelObj.getTransformGroup().setTransform(objT3D);
 	}
+	
+	void drawDot(Transform3D pos) {
+		BlueAppearance appearance = new BlueAppearance();
+		SphereObject pixelObj = new SphereObject(0.005f, appearance);
+
+		transGroup.addChild(pixelObj);
+
+//		view.addObject(pixelObj);
+
+		pixelObj.getTransformGroup().setTransform(pos);
+	}
 }

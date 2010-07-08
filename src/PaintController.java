@@ -1,3 +1,4 @@
+import javax.media.j3d.Transform3D;
 import javax.vecmath.Vector3d;
 
 public class PaintController {
@@ -39,5 +40,16 @@ public class PaintController {
 		distanceVec.sub(penTranslation, editingVolumeTranslation);
 		//distanceVec.normalize();
 		return distanceVec;
+	}
+	
+	Transform3D getDrawCoords(Transform3D penTransform, Transform3D editingVolumeTransform) {
+		Transform3D ret = new Transform3D(penTransform);
+		ret.invert();
+		//editingVolumeTransform.invert();
+		//editingVolumeTransform.invert();
+		ret.mul(ret, editingVolumeTransform);
+		//ret.add(editingVolumeTransform);
+		
+		return ret;
 	}
 }
