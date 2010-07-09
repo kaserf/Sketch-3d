@@ -145,7 +145,6 @@ public class Sketch3D implements PoseUpdatedNotification, MouseListener {
 		}
 
 //		 && paintController.shouldDraw(latestPenTranslation, latestEditingVolumeTranslation, EDITING_VOLUME_RADIUS)
-		isDrawing = true;
 		if (isDrawing) {
 			//Vector3d drawCoords = paintController.getDrawCoords(latestPenTranslation, latestEditingVolumeTranslation);
 			Transform3D drawCoords = paintController.getDrawCoords(latestPenTransformation, latestEditingVolumeTransformation);

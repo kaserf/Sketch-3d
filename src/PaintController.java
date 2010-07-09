@@ -43,11 +43,11 @@ public class PaintController {
 	}
 	
 	Transform3D getDrawCoords(Transform3D penTransform, Transform3D editingVolumeTransform) {
-		Transform3D ret = new Transform3D(penTransform);
+		Transform3D ret = new Transform3D(editingVolumeTransform);
 		ret.invert();
 		//editingVolumeTransform.invert();
 		//editingVolumeTransform.invert();
-		ret.mul(ret, editingVolumeTransform);
+		ret.mul(ret, penTransform);
 		//ret.add(editingVolumeTransform);
 		
 		return ret;

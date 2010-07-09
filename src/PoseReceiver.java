@@ -1,3 +1,4 @@
+import javax.media.j3d.Transform3D;
 import javax.vecmath.Quat4d;
 import javax.vecmath.Vector3d;
 
@@ -50,6 +51,13 @@ public class PoseReceiver extends SimplePoseReceiver {
 	
 	public Quat4d getRotationQuaternion() {
 		return rotationQuaternion;
+	}
+	
+	public Transform3D getTransformation() {
+		Transform3D markerTransform = new Transform3D();
+		markerTransform.set(this.rotationQuaternion, this.translationVector, 1);
+		
+		return markerTransform;
 	}
 	
 	public int getTag() {
