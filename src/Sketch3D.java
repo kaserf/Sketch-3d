@@ -47,6 +47,8 @@ public class Sketch3D implements PoseUpdatedNotification, MouseListener {
 
 	private Transform3D latestPenTransformation;
 
+	private boolean draw_line;
+
 	public static PaintController getPaintController() {
 		return paintController;
 	}
@@ -148,6 +150,9 @@ public class Sketch3D implements PoseUpdatedNotification, MouseListener {
 		if (isDrawing) {
 			//Vector3d drawCoords = paintController.getDrawCoords(latestPenTranslation, latestEditingVolumeTranslation);
 			Transform3D drawCoords = paintController.getDrawCoords(latestPenTransformation, latestEditingVolumeTransformation);
+			Vector3d drawVectorCoords = new Vector3d();
+			drawCoords.get(drawVectorCoords);
+			
 			//System.out.println("Drawing at coords " + drawCoords);
 			
 			if (latestPixels.size() > 5){
@@ -155,34 +160,35 @@ public class Sketch3D implements PoseUpdatedNotification, MouseListener {
 			}
 
 			Vector3d distPixels = new Vector3d();
-//			for (Vector3d pixel : latestPixels) {
-//				distPixels.sub(pixel, drawCoords);
-//				
-//				//dont draw very near pixels
-//				if (distPixels.length()<0.002)
-//					return;
-//			}
+			for (Vector3d pixel : latestPixels) {
+				distPixels.sub(pixel, drawVectorCoords);
+				
+				//dont draw very near pixels
+				if (distPixels.length()<0.002)
+					return;
+			}
 			
 			editingVolume.drawDot(drawCoords);
 			
-//			if (!latestPixels.isEmpty()){
-//				distPixels.sub(latestPixels.getLast(), drawCoords);
-//				double step = 0.01/distPixels.length();
-//				//System.out.println("dist between pixels: " + distPixels.length());
-//				//System.out.println("step " + step);
-//				if (distPixels.length()>0.02){
-//					//draw pixels in between --> interpolate
-//					for (double i = 0; i<1; i = i+step){
-//						Vector3d tmp = new Vector3d(distPixels);
-//						tmp.scale(i);
-//						tmp.add(drawCoords);
-//						editingVolume.drawDot(tmp);
-//						//System.out.println("draw interpolated pixel " + tmp);
-//					}
-//				}
-//			}
+			//interpolation
+			if (!latestPixels.isEmpty()){
+				distPixels.sub(latestPixels.getLast(), drawVectorCoords);
+				double step = 0.01/distPixels.length();
+				//System.out.println("dist between pixels: " + distPixels.length());
+				//System.out.println("step " + step);
+				if (distPixels.length()>0.02){
+					//draw pixels in between --> interpolate
+					for (double i = 0; i<1; i = i+step){
+						Vector3d tmp = new Vector3d(distPixels);
+						tmp.scale(i);
+						tmp.add(drawVectorCoords);
+						editingVolume.drawDot(tmp);
+						//System.out.println("draw interpolated pixel " + tmp);
+					}
+				}
+			}
 			
-//			latestPixels.addLast(drawCoords);
+			latestPixels.addLast(drawVectorCoords);
 		}
 	}
 
